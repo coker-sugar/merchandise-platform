@@ -10,3 +10,4 @@ export type userInfoType = {
     password: string;
     email: string;
 }
+
