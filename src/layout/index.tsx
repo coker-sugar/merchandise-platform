@@ -4,7 +4,7 @@
 import React from "react";
 import { Flex, Layout } from "antd";
 import { Outlet } from 'react-router-dom';
-import Aside from '../components/HomePage/aside/index'
+import Aside from '../components/aside/index'
 import "./index.css";
 const { Sider, Content } = Layout;
 
