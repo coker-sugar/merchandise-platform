@@ -5,6 +5,8 @@ import { createBrowserRouter, RouteObject } from "react-router-dom";
 import Layout from "../layout";
 // 登录
 import Login from "../pages/PageLogin"
+import Landing from "../pages/Landing"
+import Register from "../pages/Register"
 // 示例：redux的使用
 import Exmple from "../pages/exmple/exmple"
 
@@ -25,6 +27,14 @@ const routes: RouteObject[] = [
         element: <Exmple />,
       },     
     ],
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/landing",
+    element: <Landing />,
   },
   {
     path: "*",

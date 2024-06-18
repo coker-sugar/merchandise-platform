@@ -1,35 +1,63 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* 清除默认边距和内边距 */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* 包含内边距和边框到元素的宽度和高度中 */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* 清除列表样式 */
+ul,
+ol {
+  list-style: none;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 清除表格边框间距 */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* 清除文本修饰和颜色 */
+a {
+  text-decoration: none;
+  color: inherit;
+  /* 继承父元素的文本颜色 */
 }
 
+/* 清除表单元素默认样式 */
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  /* 继承父元素的字体 */
+  font-size: 100%;
+  /* 继承父元素的字体大小 */
+  outline: none;
+  /* 去除点击时的轮廓线 */
+  border: none;
+  /* 去除边框 */
+  background-color: transparent;
+  /* 透明背景 */
+  /* 根据需要添加其他样式重置 */
+}
+
+/* 根据需要添加其他元素的重置 */
+
+/* 清除HTML5新元素默认样式 */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
