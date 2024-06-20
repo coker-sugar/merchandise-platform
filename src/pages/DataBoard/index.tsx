@@ -1,4 +1,3 @@
-import React from 'react';
 import { Line, Column, Pie } from '@ant-design/charts';
 import  {Tabs}  from 'antd';
 import   exchangeData  from './data.tsx';
