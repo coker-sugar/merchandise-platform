@@ -6,6 +6,7 @@ function Aside() {
   const categories = [
     { "id": 0, "name": "首页", "path": "/" },
     { "id": 1, "name": "样例", "path": "/exmple" },
+    { "id": 2, "name": "商品管理", "path": "/manage" },
   ]
   return (
     <Flex vertical={true} gap="large" style={{ justifyContent: "space-around" }}>

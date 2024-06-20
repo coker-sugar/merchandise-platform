@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Form, Input, Button, Row, Col, message } from 'antd';
 import './index.css';
 const valuesProps = {
@@ -16,7 +16,14 @@ const Register = () => {
     console.log('Received values:', values);
     if (codeSent) {
       // 处理注册逻辑，此处模拟后端注册请求
-      message.success('注册成功！');
+      // const registerData = { username: 'newuser', password: 'password123' };
+      // postRegisterAPI(registerData)
+      //   .then(() => {
+      //     console.log('注册成功');
+      //   })
+      //   .catch((error) => {
+      //     console.error('注册失败:', error);
+      //   });
     } else {
       message.error('请检查验证码输入是否正确！');
     }
