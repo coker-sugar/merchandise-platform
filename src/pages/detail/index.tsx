@@ -1,5 +1,6 @@
 import './detail.less'
 import { useState } from 'react'
+import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // 导入ant组件
 import { Flex, Button, Tabs } from 'antd'
@@ -13,9 +14,12 @@ import { getExmple, getReview,getApproved,getRejected,getBatches } from '../../a
 // 导入类型
 import {exmpleType,serverType} from "../../types/server"
 
-const Detail = () => {
+const Detail = (props: any) => {
     const navigate = useNavigate();
+    console.log(props);
 
+    
+    
     const overview = {
         updateUserId: '114515',
         id: '20202459886545342',
@@ -153,4 +157,8 @@ const Detail = () => {
     );
 }
 
-export default Detail;
+// export default Detail;
+const mapStateToProps = (state:any) => {
+    return state.auth
+}
+export default connect(mapStateToProps,null)(Detail)

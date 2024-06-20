@@ -16,7 +16,6 @@ import Landing from "../pages/Landing"
 //商品管理页面
 import Manage from "../pages/Manage"
 
-
 // 示例：redux的使用
 import Exmple from "../pages/exmple/exmple"
 
@@ -29,22 +28,31 @@ import DataBoard from '../pages/DataBoard'
 // 404页面
 import NotFoundPage from "../pages/404";
 
+
+import PrivateRoute from '../components/PrivateRoute';  // 引入PrivateRoute
+
 const routes: RouteObject[] = [
   {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/login",
+    element: <Login />
+  },
+  {
+    path: "/remeber",
+    element: <Remeber />,
+  },
+  {
+    path: "/landing",
+    element: <Landing />,
+  },
+  {
     path: "/",
-    element: <Layout />,
+    element: <PrivateRoute />, 
     children: [
-      // {
-      //   index: true,
-      //   element: <Login />,
-      // },
-      // {
-      //   path: "/exmple",
-      //   element: <Exmple />,
-
-      // },
       {
-        // path: "/manage",
         index: true,
         element: <Manage />,
       },  
@@ -63,22 +71,7 @@ const routes: RouteObject[] = [
     path: "/detail",
     element: <Detail />,
   },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/login",
-    element: <Login />
-  },
-  {
-    path: "/remeber",
-    element: <Remeber />,
-  },
-  {
-    path: "/landing",
-    element: <Landing />,
-  },
+  
   {
     path: "*",
     element: <NotFoundPage />,

@@ -4,7 +4,7 @@ import { Flex, Form, Input, Button, message } from 'antd';
 import { MailOutlined, RobotOutlined, LockOutlined } from '@ant-design/icons';
 import { remeberDataType } from '../../types/user'
 import './index.less'
-import { postRemeberAPI,postEmailCode } from '../../api/user'
+import { postRemeberAPI,getEmailCode } from '../../api/user'
 
 const Remeber = () => {
     const [email, setEmail] = useState('');
@@ -42,12 +42,15 @@ const Remeber = () => {
             const getCode = {email,type:"forget"}
             console.log(getCode);
             
-            postEmailCode(getCode).then((res) => {
+            getEmailCode(getCode).then((res) => {
                 console.log(res);
+            }).catch((err) => {
+                console.log(err);
             })
+
             // 获取验证码按钮被点击变为disabled状态，在此调用发送邮箱验证码的接口
             setCodeSent(true);
-            message.success('验证码已发送至邮箱！');
+            // message.success('验证码已发送至邮箱！');
         }).catch((errorInfo) => {
             // 有字段未通过验证，显示错误提示
             message.error('请完整填写表单');

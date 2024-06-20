@@ -3,7 +3,7 @@ const initState = {
     count: 0
 }
 
-export const reducer = (state= initState,action:any) => {
+export const reducerExmple = (state= initState,action:any) => {
     switch(action.type){
         case 'ADD':
             return {

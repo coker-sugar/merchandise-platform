@@ -1,16 +1,28 @@
-import { loginDataType, userInfoType,remeberDataType,emailType } from '../types/user';
+import { loginDataType, userInfoType, remeberDataType, emailType } from '../types/user';
 import http from '../util/request'
 // api接口 - 此处用了统一保存接口url路径
 const api = {
   login: '/auth/login', // 用户登录接口
   register: '/api/user/register', // 用户注册接口
   userInfo: '/api/user/get_userinfo', // 用户信息
-  remeber:"/auth/forgot",
-  emailCode:'/auth/sendEmail'
+  remeber: "/auth/forgot",
+  emailCode: '/auth/sendEmail'
 };
 
 export function postLoginAPI(data: loginDataType) {
-  return http.post<{ token: string }>(api.login, data);
+  // 将data对象转换为URL编码的字符串
+  // const params = new URLSearchParams();
+  // if (data.username !== undefined) {
+  //   params.append('username', data.username);
+  // }
+  // if (data.password !== undefined) {
+  //   params.append('password', data.password);
+  // }
+  // return http.post(api.login, params.toString())
+  return http.post(api.login,{
+    username: data.username,
+    password: data.password
+  })
 }
 
 export function postRegisterAPI(data: loginDataType) {
@@ -26,6 +38,6 @@ export function postRemeberAPI(data: remeberDataType) {
 }
 
 
-export function postEmailCode(data: emailType) {
-  return http.post(api.emailCode, data);
+export function getEmailCode(data: emailType) {
+  return http.get(api.emailCode, { params: data });
 }

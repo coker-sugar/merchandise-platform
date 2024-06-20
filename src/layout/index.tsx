@@ -8,15 +8,6 @@ import Aside from '../components/aside/index'
 import "./index.css";
 const { Sider, Content } = Layout;
 
-
-const contentStyle: React.CSSProperties = {
-  textAlign: "center",
-  minHeight: 120,
-  lineHeight: "120px",
-  color: "#000",
-  backgroundColor: "#f4f4f4",
-};
-
 const layoutStyle = {
   overflow: "hidden",
   minWidth: "calc(50% - 8px)",

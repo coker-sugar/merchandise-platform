@@ -1,11 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 // 获取个人信息，主要是token
-// import { useSettingStore } from '@/store/user';
 
 // 创建新的axios实例
 const service = axios.create({
   // 公共接口
-  baseURL: 'http://127.0.0.1:4523',
+  // baseURL:'http://127.0.0.1:4523/m1/3169753-0-default/index',
+  baseURL: 'https://f271b81c2194a437a9b3b3b78335bc95.pty.oscollege.net',
   timeout: 5000,
 });
 
@@ -14,11 +14,13 @@ service.interceptors.request.use(
   (config) => {
     // 发请求前做的一些处理，数据转化，配置请求头，设置token,设置loading等
     // 每次发送请求之前判断pinia中是否存在token,如果存在，则统一在http请求的header都加上token，这样后台根据token判断你的登录情况
-    // const token = useSettingStore.getState().token;
 
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+
+    const token = JSON.parse(localStorage.getItem('userdata') || "{}").token;
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
     // alert("加载中...")
 
@@ -57,12 +59,12 @@ service.interceptors.response.use(
       alert('请求失败');
     } else if (response && response.data && response.data === 401) {
       alert('未认证');
-    }  else if (response && response.data && response.data === 403) {
+    } else if (response && response.data && response.data === 403) {
       alert('访问被拒绝');
     } else {
       alert('服务器错误');
     }
-    
+
     return Promise.reject(error);
   }
 );
