@@ -113,7 +113,7 @@ const ProductList = () => {
       <div className='new-product'>
         <h2>商品列表</h2>
         <div>
-          <Link to="/new-product">
+          <Link to="/NewProduct">
           <Button type="primary">新建商品</Button>
           </Link>
           {/* <Popconfirm
