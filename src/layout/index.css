@@ -2,3 +2,24 @@
   width: 100vw;
   height: 100vh;
 }
+.layoutStyle{
+  overflow: hidden;
+  min-width: calc(50% - 8px)
+}
+
+;
+.layout-sider{
+  text-align: center;
+  color: #fff;
+  display: flex;
+  min-width: calc(50% - 8px);
+  align-items: center;
+}
+/* 子路由内元素样式  */
+/* .layout-content{
+  text-align: center;
+  min-height: 120;
+  line-height: 120px;
+  color: "#000";
+  background-color: "#f4f4f4";
+}  */

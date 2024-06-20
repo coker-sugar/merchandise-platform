@@ -8,36 +8,16 @@ import Aside from '../components/aside/index'
 import "./index.css";
 const { Sider, Content } = Layout;
 
-const asideStyle: React.CSSProperties = {
-  textAlign: "center",
-  color: "#fff",
-  display: "flex",
-  minWidth: "calc(50% - 8px)",
-  alignItems: "center"
-};
-
-const contentStyle: React.CSSProperties = {
-  textAlign: "center",
-  minHeight: 120,
-  lineHeight: "120px",
-  color: "#000",
-  backgroundColor: "#f4f4f4",
-};
-
-const layoutStyle = {
-  overflow: "hidden",
-  minWidth: "calc(50% - 8px)",
-};
 
 const LayoutPage: React.FC = () => {
   return (
-    <Flex gap="middle" wrap className={"layoutPage"}> 
-      <Layout style={layoutStyle}>
-        <Sider style={asideStyle}>
+    <Flex gap="middle" wrap className="layoutPage"> 
+      <Layout className="layout">
+        <Sider className="layout-sider">
           <Aside />
         </Sider>
 
-        <Content style={contentStyle}>
+        <Content className="layout-content">
           <Outlet />
         </Content>
       </Layout>
