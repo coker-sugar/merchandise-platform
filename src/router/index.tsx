@@ -5,11 +5,17 @@ import { createBrowserRouter, RouteObject } from "react-router-dom";
 import Layout from "../layout";
 // 登录
 import Login from "../pages/PageLogin"
-import Landing from "../pages/Landing"
+//注册
 import Register from "../pages/Register"
+
 import Remeber from '../pages/Remeber'
 
 import Detail from "../pages/detail"
+
+import Landing from "../pages/Landing"
+//商品管理页面
+import Manage from "../pages/Manage"
+
 
 // 示例：redux的使用
 import Exmple from "../pages/exmple/exmple"
@@ -29,8 +35,14 @@ const routes: RouteObject[] = [
       {
         path: "/exmple",
         element: <Exmple />,
+
       },
 
+
+      {
+        path: "/manage",
+        element: <Manage />,
+      },  
     ],
   },
   {

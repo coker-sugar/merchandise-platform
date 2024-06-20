@@ -8,13 +8,6 @@ import Aside from '../components/aside/index'
 import "./index.css";
 const { Sider, Content } = Layout;
 
-const asideStyle: React.CSSProperties = {
-  textAlign: "center",
-  color: "#fff",
-  display: "flex",
-  minWidth: "calc(50% - 8px)",
-  alignItems: "center"
-};
 
 const contentStyle: React.CSSProperties = {
   textAlign: "center",
@@ -38,7 +31,7 @@ const LayoutPage: React.FC = () => {
           <Aside />
         </Sider>
 
-        <Content style={contentStyle}>
+        <Content className="layout-content">
           <Outlet />
         </Content>
       </Layout>
