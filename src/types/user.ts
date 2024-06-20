@@ -1,13 +1,23 @@
-// 创建loginDataType类型并导出
 export type loginDataType = {
-    username: string;
-    password: string;
+    username?: string;
+    password?: string;
+    auto?: string;
 };
 
-// 创建registerDataType类型并导出
+
 export type userInfoType = {
     username: string;
     password: string;
     email: string;
 }
 
+export type emailType = {
+    email: string;
+    type:string
+}
+
+export type remeberDataType = {
+    email: 'string',
+    password: 'string',
+    code: 'string',
+}

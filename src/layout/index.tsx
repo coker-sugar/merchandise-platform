@@ -27,11 +27,12 @@ const contentStyle: React.CSSProperties = {
 const layoutStyle = {
   overflow: "hidden",
   minWidth: "calc(50% - 8px)",
+  minHeight: "96vh",
 };
 
 const LayoutPage: React.FC = () => {
   return (
-    <Flex gap="middle" wrap className={"layoutPage"}> 
+    <Flex gap="middle" > 
       <Layout style={layoutStyle}>
         <Sider style={asideStyle}>
           <Aside />

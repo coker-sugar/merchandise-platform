@@ -1,4 +1,3 @@
-/****   request.ts   ****/
 import axios, { AxiosError, AxiosResponse } from 'axios';
 // 获取个人信息，主要是token
 // import { useSettingStore } from '@/store/user';
@@ -6,7 +5,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 // 创建新的axios实例
 const service = axios.create({
   // 公共接口
-  baseURL: import.meta.env.VITE_APP_BASE_API,
+  baseURL: 'http://127.0.0.1:4523',
   timeout: 5000,
 });
 
@@ -21,7 +20,7 @@ service.interceptors.request.use(
     //   config.headers.Authorization = `Bearer ${token}`;
     // }
 
-    alert("加载中...")
+    // alert("加载中...")
 
     // json格式
     config.data = JSON.stringify(config.data);
@@ -39,7 +38,6 @@ service.interceptors.response.use(
   (response: AxiosResponse) => {
     const { status, data } = response;
     if (status === 200) {
-      // 接口网络请求成功，关闭等待提示
       if (data.code === 0) {
         return data;
       } else {
@@ -54,16 +52,17 @@ service.interceptors.response.use(
       alert('网络超时');
     }
 
-    // 根据响应的错误状态码，做不同的处理，此处只是作为示例，请根据实际业务处理
+    // 根据响应的错误状态码，做不同的处理
     if (response && response.data && response.data === 400) {
-      alert('报错信息400');
+      alert('请求失败');
     } else if (response && response.data && response.data === 401) {
-      alert('报错信息401');
+      alert('未认证');
+    }  else if (response && response.data && response.data === 403) {
+      alert('访问被拒绝');
     } else {
-      alert('报错信息');
+      alert('服务器错误');
     }
     
-
     return Promise.reject(error);
   }
 );
