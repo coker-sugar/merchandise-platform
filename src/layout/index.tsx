@@ -4,17 +4,10 @@
 import React from "react";
 import { Flex, Layout } from "antd";
 import { Outlet } from 'react-router-dom';
-import Aside from '../components/HomePage/aside/index'
+import Aside from '../components/aside/index'
 import "./index.css";
 const { Sider, Content } = Layout;
 
-const asideStyle: React.CSSProperties = {
-  textAlign: "center",
-  color: "#fff",
-  display: "flex",
-  minWidth: "calc(50% - 8px)",
-  alignItems: "center"
-};
 
 const contentStyle: React.CSSProperties = {
   textAlign: "center",
@@ -27,17 +20,18 @@ const contentStyle: React.CSSProperties = {
 const layoutStyle = {
   overflow: "hidden",
   minWidth: "calc(50% - 8px)",
+  minHeight: "96vh",
 };
 
 const LayoutPage: React.FC = () => {
   return (
-    <Flex gap="middle" wrap className={"layoutPage"}> 
+    <Flex gap="middle" > 
       <Layout style={layoutStyle}>
         <Sider style={asideStyle}>
           <Aside />
         </Sider>
 
-        <Content style={contentStyle}>
+        <Content className="layout-content">
           <Outlet />
         </Content>
       </Layout>

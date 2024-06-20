@@ -1,0 +1,15 @@
+.manage{
+  width: 80vw;
+  margin: 0 auto;
+}
+.manage-form{
+  display: flex;
+  margin: 20px auto;
+  /* align-items: center; */
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+
+  
+  background-color: rgb(255, 255, 255);
+}

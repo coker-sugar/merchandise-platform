@@ -13,4 +13,4 @@ class ComB extends React.Component {
 const mapStateToProps = (state:any) => {
     return state
 }
-export default connect(mapStateToProps)(ComB)
+export default connect(mapStateToProps,null)(ComB)
