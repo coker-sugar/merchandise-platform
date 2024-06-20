@@ -9,11 +9,25 @@ import "./index.css";
 const { Sider, Content } = Layout;
 
 
+const contentStyle: React.CSSProperties = {
+  textAlign: "center",
+  minHeight: 120,
+  lineHeight: "120px",
+  color: "#000",
+  backgroundColor: "#f4f4f4",
+};
+
+const layoutStyle = {
+  overflow: "hidden",
+  minWidth: "calc(50% - 8px)",
+  minHeight: "96vh",
+};
+
 const LayoutPage: React.FC = () => {
   return (
-    <Flex gap="middle" wrap className="layoutPage"> 
-      <Layout className="layout">
-        <Sider className="layout-sider">
+    <Flex gap="middle" > 
+      <Layout style={layoutStyle}>
+        <Sider style={asideStyle}>
           <Aside />
         </Sider>
 

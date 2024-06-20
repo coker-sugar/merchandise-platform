@@ -7,10 +7,15 @@ import Layout from "../layout";
 import Login from "../pages/PageLogin"
 //注册
 import Register from "../pages/Register"
-//Landing
+
+import Remeber from '../pages/Remeber'
+
+import Detail from "../pages/detail"
+
 import Landing from "../pages/Landing"
 //商品管理页面
 import Manage from "../pages/Manage"
+
 
 // 示例：redux的使用
 import Exmple from "../pages/exmple/exmple"
@@ -26,11 +31,14 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: <Login />,
-      },   
+      },
       {
         path: "/exmple",
         element: <Exmple />,
-      },   
+
+      },
+
+
       {
         path: "/manage",
         element: <Manage />,
@@ -38,8 +46,20 @@ const routes: RouteObject[] = [
     ],
   },
   {
+    path: "/detail",
+    element: <Detail />,
+  },
+  {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/login",
+    element: <Login />
+  },
+  {
+    path: "/remeber",
+    element: <Remeber />,
   },
   {
     path: "/landing",
