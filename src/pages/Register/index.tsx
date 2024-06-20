@@ -1,31 +1,29 @@
 import { useState } from 'react';
 import { Form, Input, Button, Row, Col, message } from 'antd';
 import './index.css';
-const valuesProps = {
-  email: 'string',
-  password: 'string',
-  username: 'string',
-  code: 'string',
-}
+import { postRegisterAPI,postEmailCode  } from '../../api/user'
+import { registerDataType} from '../../types/user'
+
 
 const Register = () => {
   const [codeSent, setCodeSent] = useState(false);
   const [form] = Form.useForm();
+  let email=''
   // 提交表单后处理逻辑
-  const onFinish = (values: typeof valuesProps) => {
+  const onFinish = (values: registerDataType) => {
     console.log('Received values:', values);
+    email=values.email
+    // 验证码已发送，可以执行注册操作
     if (codeSent) {
       // 处理注册逻辑，此处模拟后端注册请求
-      // const registerData = { username: 'newuser', password: 'password123' };
-      // postRegisterAPI(registerData)
-      //   .then(() => {
-      //     console.log('注册成功');
-      //   })
-      //   .catch((error) => {
-      //     console.error('注册失败:', error);
-      //   });
+      postRegisterAPI(values).then(res => {
+        console.log(res)
+        // 跳转至登录
+      }).catch(err => {
+        console.log(err)
+      })
     } else {
-      message.error('请检查验证码输入是否正确！');
+      message.error('请获取验证码！');
     }
   };
 
@@ -36,10 +34,18 @@ const Register = () => {
       // 获取验证码按钮被点击变为disabled状态，在此调用发送邮箱验证码的接口
       setCodeSent(true);
       message.success('验证码已发送至邮箱！');
+      const getCode = {email,type:"forget"}
+      postEmailCode(getCode).then((res) => {
+                console.log(res);
+            })
+
+
+      
     }).catch((errorInfo) => {
       // 有字段未通过验证，显示错误提示
       message.error('请完整填写表单');
     });
+    
 
   };
 

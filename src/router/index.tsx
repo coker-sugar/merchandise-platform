@@ -20,6 +20,12 @@ import Manage from "../pages/Manage"
 // 示例：redux的使用
 import Exmple from "../pages/exmple/exmple"
 
+// 新建商品页
+import NewProduct from "../pages/NewProduct";  
+
+//数据大盘页
+import DataBoard from '../pages/DataBoard'
+
 // 404页面
 import NotFoundPage from "../pages/404";
 
@@ -28,22 +34,30 @@ const routes: RouteObject[] = [
     path: "/",
     element: <Layout />,
     children: [
+      // {
+      //   index: true,
+      //   element: <Login />,
+      // },
+      // {
+      //   path: "/exmple",
+      //   element: <Exmple />,
+
+      // },
       {
+        // path: "/manage",
         index: true,
-        element: <Login />,
-      },
-      {
-        path: "/exmple",
-        element: <Exmple />,
-
-      },
-
-
-      {
-        path: "/manage",
         element: <Manage />,
       },  
+     
+      {
+        path: "/DataBoard",  // 改成相对路径
+        element: <DataBoard />,  // 修改这里
+      },
     ],
+  },
+  {
+    path: "/NewProduct",  // 改成相对路径
+    element: <NewProduct />,  // 修改这里
   },
   {
     path: "/detail",

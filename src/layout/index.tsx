@@ -27,7 +27,7 @@ const LayoutPage: React.FC = () => {
   return (
     <Flex gap="middle" > 
       <Layout style={layoutStyle}>
-        <Sider style={asideStyle}>
+        <Sider >
           <Aside />
         </Sider>
 

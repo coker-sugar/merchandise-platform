@@ -21,3 +21,10 @@ export type remeberDataType = {
     password: 'string',
     code: 'string',
 }
+
+export type registerDataType = {
+    email: 'string',
+    password: 'string',
+    username: 'string',
+    code: 'string',
+}
