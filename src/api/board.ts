@@ -1,5 +1,4 @@
 import http from '../util/request'
-import  { Dayjs } from 'dayjs';
 
 const api = {
     exchange: '/product/exchangeData',
@@ -8,20 +7,20 @@ const api = {
    
 };
 
-export function exchangeAPI(startTime:Dayjs, endTime:Dayjs) {
+export function exchangeAPI(startTime:string, endTime:string) {
     return http.post(api.exchange,{
         timeOn:startTime,
         timeOff:endTime
     });
 }
-export function saleTop20API(startTime:Dayjs, endTime:Dayjs) {
+export function saleTop20API(startTime:string, endTime:string) {
     return http.post(api.saleTop20,{
         timeOn:startTime,
         timeOff:endTime
     });
 }
-export function exchangeWayAPI(startTime:Dayjs, endTime:Dayjs) {
-    return http.post(api.exchangeWay,{
+export function exchangeWayAPI(startTime:string, endTime:string) {
+    return http.post(`${api.exchangeWay}?timeOn=${startTime}&timeOff=${endTime}`,{
         timeOn:startTime,
         timeOff:endTime
     });

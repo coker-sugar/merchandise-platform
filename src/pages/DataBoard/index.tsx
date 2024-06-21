@@ -60,9 +60,9 @@ const DataBoard = () => {
 
     const Calendar: React.FC = () => {
         const disabledDate = (current: dayjs.Dayjs): boolean => {
-            if (!current) {
-                return false;
-            }
+            // if (!current) {
+            //     return false;
+            // }
             return current.isAfter(dayjs()) || current.isBefore(dayjs().subtract(60, 'days'));
         };
 
@@ -105,15 +105,16 @@ const DataBoard = () => {
         };
 
         useDidUpdateEffect(() => {
-            console.log(startTime);
-
+            const startTimeStr = startTime.format('YYYY-MM-DD');
+            const endTimeStr = endTime.format('YYYY-MM-DD');
             // 在组件挂载后调用接口获取数据
-            exchangeAPI(startTime, endTime).then(res => {
-                setExchangeData(res.data);
+            exchangeAPI(startTimeStr, endTimeStr).then(res => {
+                console.log(res);
+                
+                setExchangeData(res.data.exchangeDataList);
             }).catch(error => {
                 console.error(error);
             });
-            console.log(startTime);
 
         }, [startTime, endTime]);
 
@@ -135,12 +136,15 @@ const DataBoard = () => {
 
         useDidUpdateEffect(() => {
             // console.log(startTime);
-
+            const startTimeStr = startTime.format('YYYY-MM-DD');
+            const endTimeStr = endTime.format('YYYY-MM-DD');
             // 在组件挂载后调用接口获取数据
-            saleTop20API(startTime, endTime).then(res => {
-                setsaleTop20Data(res.data);
+            saleTop20API(startTimeStr, endTimeStr).then(res => {
+                console.log(res);
+
+                setsaleTop20Data(res.data.categoriesDataList);
             }).catch(error => {
-                console.error(error);
+                console.log(error);
             });
             // console.log(startTime);
         }, [startTime, endTime]);
@@ -160,13 +164,15 @@ const DataBoard = () => {
         };
 
         useDidUpdateEffect(() => {
-            // console.log(startTime);
-
+            const startTimeStr = startTime.format('YYYY-MM-DD');
+            const endTimeStr = endTime.format('YYYY-MM-DD');
             // 在组件挂载后调用接口获取数据
-            exchangeWayAPI(startTime, endTime).then(res => {
-                setexchangeWayData(res.data);
+            exchangeWayAPI(startTimeStr, endTimeStr).then(res => {
+                console.log(res);
+                
+                // setexchangeWayData(res.data);
             }).catch(error => {
-                console.error(error);
+                console.error('111',error);
             });
             // console.log(startTime);
         }, [startTime, endTime]);
