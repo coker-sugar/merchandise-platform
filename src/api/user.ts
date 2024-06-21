@@ -19,10 +19,7 @@ export function postLoginAPI(data: loginDataType) {
   //   params.append('password', data.password);
   // }
   // return http.post(api.login, params.toString())
-  return http.post(api.login,{
-    username: data.username,
-    password: data.password
-  })
+  return http.post(api.login,JSON.parse(JSON.stringify(data)))
 }
 
 export function postRegisterAPI(data: loginDataType) {

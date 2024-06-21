@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Flex, Button, Checkbox, Form, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { loginDataType } from '../../types/user'
+import axios from "axios"
 import { postLoginAPI } from '../../api/user'
 
 // import { setAuthData } from '../../redux/reducer/user'
@@ -19,24 +20,31 @@ const Login = (props: any) => {
     console.log('Success:', values);
     const { username, password } = values
     const loginData = { username, password }
-     // 发送请求
-    postLoginAPI(loginData).then(res => {
-      console.log(res)
+    axios.post("https://f271b81c2194a437a9b3b3b78335bc95.pty.oscollege.net/auth/login", loginData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
 
-    const Logindata = {
-      expire: "2024-06-1614:19:15.243",
-      Id: 1,
-      roleId: 1,
-      token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwiZXhwIjoxNzE5NzUyMjcwLCJpYXQiOjE3MTg4ODgyNzAsImp0aSI6ImFhZjAxNjgyLTdhYTgtNGQ0MS05NWZmLWI4MzhmZWI2ZjUwYyIsImF1dGhvcml0aWVzIjpbIlJPTEVfdXNlciJdfQ.UaReOsE28vKIT8FbHV2uESo_XB3uabH_bh0iYRxuKYQ",
-      username: "admin"
-    }
-    props.setToken(Logindata)
-    localStorage.setItem('user', JSON.stringify(Logindata))
+    //  发送请求
+    // postLoginAPI(loginData).then(res => {
+    //   console.log(res)  
+
+    // const Logindata = {
+    //   expire: "2024-06-1614:19:15.243",
+    //   Id: 1,
+    //   roleId: 1,
+    //   token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwiZXhwIjoxNzE5NzUyMjcwLCJpYXQiOjE3MTg4ODgyNzAsImp0aSI6ImFhZjAxNjgyLTdhYTgtNGQ0MS05NWZmLWI4MzhmZWI2ZjUwYyIsImF1dGhvcml0aWVzIjpbIlJPTEVfdXNlciJdfQ.UaReOsE28vKIT8FbHV2uESo_XB3uabH_bh0iYRxuKYQ",
+    //   username: "admin"
+    // }
+    // props.setToken(Logindata)
+    // localStorage.setItem('user', JSON.stringify(Logindata))
     // 这里该如何跳转至首页
-    navigate('/')
-      }).catch(err => {
-        console.log(err)
-      })
+    // navigate('/')
+      // }).catch(err => {
+      //   console.log(err)
+      // })
+      
   };
 
   const onFinishFailed: FormProps<loginDataType>['onFinishFailed'] = (errorInfo) => {

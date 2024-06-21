@@ -7,7 +7,7 @@ export interface FilterType {
     productStatus?: number,
     manager?: string,
     pageNo:number,
-    pageSize:number
+    pageSize:number 
 }
 
 export interface RowType {

@@ -76,6 +76,10 @@ const routes: RouteObject[] = [
     path: "*",
     element: <NotFoundPage />,
   },
+  {
+    path:'/test',
+    element:<DataBoard />
+  }
 ];
 
 const router = createBrowserRouter(routes);
