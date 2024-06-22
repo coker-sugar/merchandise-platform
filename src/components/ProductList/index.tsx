@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Table, Button, Tabs, Checkbox, Popconfirm } from 'antd';
+import { Table, Button, Tabs, Checkbox, Popconfirm ,Radio} from 'antd';
 import { Link } from 'react-router-dom';
 import './index.css'
 import { RowType } from '../../types/manage'
@@ -28,13 +28,13 @@ const ProductList: React.FC<ProductTableProps> = ({ currentPage, pageSize, onCha
   };
 
   // 批量操作选中的商品id
-  // const [selectedIDs, setSelectedIDs] = useState([]);
+  const [selectedIDs, setSelectedIDs] = useState<string[]>([]); 
 
   const [currentUser, setCurrentUser] = useState('admin');
 
   useEffect(() => {
     // 在组件挂载时从本地存储中获取角色名
-    const role = JSON.parse(localStorage.getItem('userdata')).username
+    const role =  JSON.parse(localStorage.getItem('userdata')).username 
     setCurrentUser(role)
   }, []);
   // console.log(JSON.parse(localStorage.getItem('userdata')).username);
@@ -55,27 +55,8 @@ const ProductList: React.FC<ProductTableProps> = ({ currentPage, pageSize, onCha
     return false;
   });
 
-  // //处理哪些商品ID被选中
-  // const handleCheckboxChange = (productId, e) => {
-  //   if (e.target.checked) {
-  //     setSelectedIDs([...selectedIDs, productId]);
-  //   } else {
-  //     setSelectedIDs(selectedIDs.filter(id => id !== productId));
-  //   }
-  // };
   // 列表
-
   const columns = [
-    // 多选框
-    // {
-    // title: '选择',
-    // dataIndex: 'selected',
-    // key: 'selected',
-    // render: (record) => (
-    //   record ? <Checkbox onChange={(e) => handleCheckboxChange(record.id, e)} /> : null
-    // ),
-    // },
-
     {
       title: '商品ID', dataIndex: 'id', key: 'id', onCell: (record: RowType) => ({ onClick: () => handleRowClick(record) })
     },
@@ -149,6 +130,19 @@ const ProductList: React.FC<ProductTableProps> = ({ currentPage, pageSize, onCha
   };
 
 
+  const rowSelection = {
+    onChange: (selectedRowKeys: React.Key[], selectedRows: RowType[]) => {
+      // 提取selectedRows数组中每个对象的id值
+      const selectedIds = selectedRows.map(row => row.id);
+
+      // 使用setSelectedIDs函数将id值设置为selected状态
+      setSelectedIDs(selectedIds);
+    },
+    getCheckboxProps: (record: RowType) => ({
+      disabled: record.status !== 5,
+      // name: record.name,
+    }),
+  };
 
 
   return (
@@ -160,7 +154,7 @@ const ProductList: React.FC<ProductTableProps> = ({ currentPage, pageSize, onCha
           <Link to="/NewProduct">
             <Button type="primary">新建商品</Button>
           </Link>
-          {/* <Popconfirm
+          <Popconfirm
             title="确认操作?"
             onConfirm={() =>handleToggleStatus(selectedIDs)}
             okText="是"
@@ -170,10 +164,9 @@ const ProductList: React.FC<ProductTableProps> = ({ currentPage, pageSize, onCha
               style={{display:currentUser === 'admin'?'line-block':'none'}} 
               >批量下线
             </Button>
-          </Popconfirm> */}
+          </Popconfirm>
         </div>
       </div>
-
 
       <div>
         {/* TAB栏 */}
@@ -183,7 +176,13 @@ const ProductList: React.FC<ProductTableProps> = ({ currentPage, pageSize, onCha
           <TabPane tab="已下线" key="inactive" />
         </Tabs>
         {/* 商品列表 */}
+
         <Table
+          rowSelection={{
+            type: 'checkbox',
+            ...rowSelection,
+          }}
+          
           style={{ padding: '0 20px' }}
           columns={columns}
           dataSource={filteredTabProducts}
