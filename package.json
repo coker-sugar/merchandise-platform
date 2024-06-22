@@ -9,11 +9,13 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+
   "dependencies": {
     "@ant-design/charts": "^2.1.1",
     "@reduxjs/toolkit": "^2.2.5",
     "antd": "^5.18.1",
     "axios": "^1.7.2",
+    "http-proxy-middleware": "^3.0.0",
     "qs": "^6.12.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

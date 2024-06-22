@@ -6,26 +6,31 @@ const api = {
     approved:'/product/audit/approved/',
     rejected:'/product/audit/refuse/',
     batches:'/product/batchesOffline',
-    review:'/product/submitForReview/'
+    review:'/product/submitForReview/',
+
+    product:'/product/',
 };
 
 export function getExmple() {
-    return http.get<{ token: string }>(api.exmple);
+    return http.get(api.exmple);
 }
 
 export function getApproved(id:string) {
-    return http.get<{ token: string }>(api.approved+id);
+    return http.get(api.approved+id);
 }
 
 export function getRejected(id:string) {
-    return http.get<{ token: string }>(api.rejected+id);
+    return http.get(api.rejected+id);
 }
 
 export function getBatches(ids:string[]) {
-    return http.post<{ token: string }>(api.batches,ids);
+    return http.post(api.batches,ids);
 }
 
 export function getReview(id:string) {
-    return http.get(api.review+'1');
+    return http.get(`${api.review}${id}`);
 }
 
+export function getProduct(id:string) {
+    return http.get(`${api.product}${id}`);
+}

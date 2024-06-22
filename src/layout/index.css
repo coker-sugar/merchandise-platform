@@ -4,10 +4,13 @@
 }
 .layoutStyle{
   overflow: hidden;
-  min-width: calc(50% - 8px)
+  min-width: calc(50% - 8px);
+  min-height:96vh;
+}
+.asideStyle {
+  width: 20px !important;
 }
 
-;
 .layout-sider{
   text-align: center;
   color: #fff;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Input, Button, Row, Col, message } from 'antd';
 import './index.css';
-import { postRegisterAPI,postEmailCode  } from '../../api/user'
+import { postRegisterAPI,getEmailCode  } from '../../api/user'
 import { registerDataType} from '../../types/user'
 
 
@@ -35,7 +35,7 @@ const Register = () => {
       setCodeSent(true);
       message.success('验证码已发送至邮箱！');
       const getCode = {email,type:"forget"}
-      postEmailCode(getCode).then((res) => {
+      getEmailCode(getCode).then((res) => {
                 console.log(res);
             })
 

@@ -6,22 +6,18 @@ const api = {
   register: '/api/user/register', // 用户注册接口
   userInfo: '/api/user/get_userinfo', // 用户信息
   remeber: "/auth/forgot",
-  emailCode: '/auth/sendEmail'
+  emailCode: '/auth/sendEmail',
+  exit:'/auth/logout'
 };
 
 export function postLoginAPI(data: loginDataType) {
-  // 将data对象转换为URL编码的字符串
-  // const params = new URLSearchParams();
-  // if (data.username !== undefined) {
-  //   params.append('username', data.username);
-  // }
-  // if (data.password !== undefined) {
-  //   params.append('password', data.password);
-  // }
-  // return http.post(api.login, params.toString())
   return http.post(api.login,{
     username: data.username,
     password: data.password
+  },{
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   })
 }
 
@@ -34,10 +30,18 @@ export function getUserInfoAPI() {
 }
 
 export function postRemeberAPI(data: remeberDataType) {
-  return http.post(api.remeber, data);
+  return http.post(api.remeber, {
+    email: data.email,
+    password: data.password,
+    code: data.code
+  });
 }
 
 
 export function getEmailCode(data: emailType) {
   return http.get(api.emailCode, { params: data });
+}
+
+export function getExit(token:string) {
+  return http.get(api.exit, { params: token });
 }

@@ -13,12 +13,12 @@ let initUser:AuthState = {
   username: ''
 }
 // 数据持久化
-const localValue = localStorage.getItem("userdata")
+const localValue = localStorage.getItem("user")
 if (localValue == null) {
   initUser =  {
     expire: '',
     id: 0,
-    roleId: 0,
+    roleId: 2, // 用户
     token: '',
     username: ''
   }
@@ -30,7 +30,7 @@ export const authReducer = (state = initUser, action: any) => {
   switch (action.type) {
     case 'setUser':
       // console.log(action.payload);
-      localStorage.setItem("userdata",JSON.stringify(action.payload))
+      localStorage.setItem("user",JSON.stringify(action.payload))
       return {
         ...state,
         ...action.payload

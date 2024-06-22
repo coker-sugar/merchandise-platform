@@ -5,11 +5,15 @@ import { MailOutlined, RobotOutlined, LockOutlined } from '@ant-design/icons';
 import { remeberDataType } from '../../types/user'
 import './index.less'
 import { postRemeberAPI,getEmailCode } from '../../api/user'
-
+import { AxiosResponse } from 'axios';
+import axios from 'axios'
+interface responseType  {
+    code:number,
+    data:object,
+    message:string
+}
 const Remeber = () => {
     const [email, setEmail] = useState('');
-
-
     const [codeSent, setCodeSent] = useState(false);
     const [form] = Form.useForm();
 
@@ -21,18 +25,38 @@ const Remeber = () => {
             email,
             code,
             password
-        }   
+        }       
         postRemeberAPI(remeberData).then((res) => {
+            console.log("请求成功");
             console.log(res);
+            
+            message.success("更改密码成功")
         }).catch((err) => {
+            console.log("请求错误");
             console.log(err);
+            
+            message.error("更改密码失败")
         })
 
-        if (codeSent) {
-            message.success('密码修改成功');
-        } else {
-            message.error('请检查验证码输入是否正确！');
-        }
+        // axios.post('https://f271b81c2194a437a9b3b3b78335bc95.pty.oscollege.net/auth/forgot', {
+        //     email:remeberData.email,
+        //     code:remeberData.code,
+        //     password:remeberData.password
+        // },{
+        //     headers:{
+        //         'Content-Type':'application/json',
+        //     }
+        // }).then((res:AxiosResponse<responseType>) => {
+        //     console.log("请求成功");
+        //     console.log(res);
+        //     message.success("更改密码成功")
+        // }).catch((err) => {
+        //     console.log("请求错误");
+        //     console.log(err);
+        //     message.error("更改密码失败")       
+        // })
+
+
     };
 
     // 获取验证码按钮的点击事件处理逻辑
@@ -43,11 +67,17 @@ const Remeber = () => {
             console.log(getCode);
             
             getEmailCode(getCode).then((res) => {
+                console.log("请求成功");
                 console.log(res);
             }).catch((err) => {
+                console.log("请求错误");
                 console.log(err);
+                if (err.message.includes('|')) {
+                    message.success(`请求成功，请复制：${ err.message.split('|')[0]}`) ;
+                } else {
+                    message.error(err.message)
+                }
             })
-
             // 获取验证码按钮被点击变为disabled状态，在此调用发送邮箱验证码的接口
             setCodeSent(true);
             // message.success('验证码已发送至邮箱！');
@@ -76,8 +106,8 @@ const Remeber = () => {
                 >
                     <Flex gap="small">
                         <Input prefix={<RobotOutlined className="site-form-item-icon" />} placeholder="Code" />
-                        <Button className='btn' onClick={ handleGetCode} disabled={codeSent}>
-                            {codeSent ? '已发送验证码' : '获取验证码'}
+                        <Button className='btn' onClick={ handleGetCode}>
+                            {codeSent ? '重新发送' : '获取验证码'}
                         </Button>
                     </Flex>
                 </Form.Item>

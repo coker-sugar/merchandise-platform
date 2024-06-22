@@ -7,18 +7,16 @@ import { Outlet } from 'react-router-dom';
 import Aside from '../components/aside/index'
 import "./index.css";
 const { Sider, Content } = Layout;
+import Header  from '../components/header'
 
-const layoutStyle = {
-  overflow: "hidden",
-  minWidth: "calc(50% - 8px)",
-  minHeight: "96vh",
-};
 
 const LayoutPage: React.FC = () => {
   return (
-    <Flex gap="middle" > 
-      <Layout style={layoutStyle}>
-        <Sider >
+    <>
+    <Header />
+      <Flex gap="middle" > 
+      <Layout className="layoutStyle">
+        <Sider className="asideStyle">
           <Aside />
         </Sider>
 
@@ -27,6 +25,7 @@ const LayoutPage: React.FC = () => {
         </Content>
       </Layout>
     </Flex>
+    </>
   );
 };
 

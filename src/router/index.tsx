@@ -20,7 +20,7 @@ import Manage from "../pages/Manage"
 import Exmple from "../pages/exmple/exmple"
 
 // 新建商品页
-import NewProduct from "../pages/NewProduct";  
+import NewProduct from "../pages/NewProduct";
 
 //数据大盘页
 import DataBoard from '../pages/DataBoard'
@@ -31,6 +31,7 @@ import NotFoundPage from "../pages/404";
 
 import PrivateRoute from '../components/PrivateRoute';  // 引入PrivateRoute
 
+import PrivateRouter from "./privateRoute";
 const routes: RouteObject[] = [
   {
     path: "/register",
@@ -50,28 +51,35 @@ const routes: RouteObject[] = [
   },
   {
     path: "/",
-    element: <PrivateRoute />, 
+    element: <PrivateRoute />,
     children: [
       {
         index: true,
         element: <Manage />,
-      },  
-     
+      },
+
       {
-        path: "/DataBoard",  // 改成相对路径
-        element: <DataBoard />,  // 修改这里
+        path: "/DataBoard", 
+        element:
+          <PrivateRouter>
+            <DataBoard />
+          </PrivateRouter>,  
       },
     ],
   },
   {
-    path: "/NewProduct",  // 改成相对路径
-    element: <NewProduct />,  // 修改这里
+    path: "/NewProduct",  
+    element: <PrivateRouter>
+      <NewProduct />
+    </PrivateRouter>
   },
   {
     path: "/detail",
-    element: <Detail />,
+    element: <PrivateRouter>
+      <Detail />
+    </PrivateRouter>,
   },
-  
+
   {
     path: "*",
     element: <NotFoundPage />,

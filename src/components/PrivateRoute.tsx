@@ -7,6 +7,7 @@ const PrivateRoute: React.FC = () => {
   const isLoggedIn = () => {
     //检查本地是否有账号 并且 auto是否为true，如果为true就进入，否则就进入landing页
     return !!localStorage.getItem('user') 
+    // return true
   };
 
   return isLoggedIn() ? <Layout /> : <Navigate to="/landing" />;
