@@ -12,13 +12,13 @@ export interface FilterType {
 
 // 商品列表行
 export interface RowType {
-    id: string;
-    name: string;
-    stock: number;
-    startTime: string;
-    endTime: string;
-    status: number;
-    manager: string;
+  id: number;
+  managerName: string;
+  name: string;
+  state: number;
+  stock: number;
+  timeOff: string;
+  timeOn: string;
 }
 
 // 商品信息

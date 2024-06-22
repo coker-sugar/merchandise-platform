@@ -13,22 +13,31 @@ const Register = () => {
 
   // 提交表单后处理逻辑
   const onFinish = (values: registerDataType) => {
-    console.log('Received values:', values);
+    // console.log('Received values:', values);
 
-    const { email, code, password } = values;
+    const { email, code, password,username } = values;
     const registerData = {
       email,
       code,
-      password
+      password,
+      username
     }   
+    console.log(registerData);
+    const jsoned = JSON.stringify(registerData);
+    console.log(jsoned);
+    
+    
     // 验证码已发送，可以执行注册操作
     if (codeSent) {
       // 处理注册逻辑，此处模拟后端注册请求
       postRegisterAPI(registerData).then(res => {
         console.log(res)
-        // 跳转至登录
+        alert('注册成功！');
+        // 注册成功后跳转至登录页面
+        window.location.href = '/login';
       }).catch(err => {
         console.log(err)
+        alert('注册失败.请重新注册！');
       })
     } else {
       message.error('请获取验证码！');
@@ -42,15 +51,20 @@ const Register = () => {
       // 获取验证码按钮被点击变为disabled状态，在此调用发送邮箱验证码的接口
       // message.success('验证码已发送至邮箱！');
       const getCode = {email,type:"register"}
-      console.log(getCode);
-      getEmailCode(getCode).then((res) => {
-        console.log(res);
-        // console.log(res.message.email.substring(0, 6));
-        // alert(`验证码为：${res.message.email.substring(0, 6)}`)
+      // console.log(getCode);
+       getEmailCode(getCode).then((res) => {
+                console.log("请求成功");
+                console.log(res);
+            }).catch((err) => {
+                console.log("请求错误");
+                console.log(err);
+                if (err.message.includes('|')) {
+                    message.success(`请求成功，请复制：${ err.message.split('|')[0]}`) ;
+                } else {
+                    message.error(err.message)
+                }
+            })
 
-      }).catch((err) => {
-        console.log(err);
-      })
       setCodeSent(true);
 
     }).catch((error) => {
@@ -90,7 +104,7 @@ const Register = () => {
               rules={[{ required: true, message: '请输入验证码！' }]}
             >
               <div style={{ display: 'flex' }}>
-                <Input />
+                <Input  />
                 <Button onClick={handleGetCode} >
                   {codeSent ? '已发送验证码' : '获取验证码'}
                 </Button>

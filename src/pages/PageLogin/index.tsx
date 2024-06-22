@@ -20,10 +20,14 @@ const Login = (props: any) => {
     console.log('Success:', values);
     const { username, password } = values
     const loginData = { username, password }
-    axios.post("https://f271b81c2194a437a9b3b3b78335bc95.pty.oscollege.net/auth/login", loginData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+    postLoginAPI(loginData).then(res => {
+      console.log(res.data)
+      props.setToken(res.data)
+      localStorage.setItem('user', JSON.stringify(res.data))
+      navigate('/')
+
+    }).catch(err => {
+      console.log(err)
     })
 
     //  发送请求
