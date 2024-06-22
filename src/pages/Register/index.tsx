@@ -1,26 +1,43 @@
 import { useState } from 'react';
 import { Form, Input, Button, Row, Col, message } from 'antd';
 import './index.css';
-import { postRegisterAPI,postEmailCode  } from '../../api/user'
+import { postRegisterAPI,getEmailCode  } from '../../api/user'
 import { registerDataType} from '../../types/user'
 
 
 const Register = () => {
   const [codeSent, setCodeSent] = useState(false);
   const [form] = Form.useForm();
-  let email=''
+  const [email, setEmail] = useState('');
+
+
   // 提交表单后处理逻辑
   const onFinish = (values: registerDataType) => {
-    console.log('Received values:', values);
-    email=values.email
+    // console.log('Received values:', values);
+
+    const { email, code, password,username } = values;
+    const registerData = {
+      email,
+      code,
+      password,
+      username
+    }   
+    console.log(registerData);
+    const jsoned = JSON.stringify(registerData);
+    console.log(jsoned);
+    
+    
     // 验证码已发送，可以执行注册操作
     if (codeSent) {
       // 处理注册逻辑，此处模拟后端注册请求
-      postRegisterAPI(values).then(res => {
+      postRegisterAPI(registerData).then(res => {
         console.log(res)
-        // 跳转至登录
+        alert('注册成功！');
+        // 注册成功后跳转至登录页面
+        window.location.href = '/login';
       }).catch(err => {
         console.log(err)
+        alert('注册失败.请重新注册！');
       })
     } else {
       message.error('请获取验证码！');
@@ -29,21 +46,30 @@ const Register = () => {
 
   // 获取验证码按钮的点击事件处理逻辑
   const handleGetCode = () => {
-      // 所有字段通过验证，可以执行获取验证码的操作
-    form.validateFields().then(() => {
+      // 除code外所有字段通过验证，可以执行获取验证码的操作
+    form.validateFields(['email']).then(() => {
       // 获取验证码按钮被点击变为disabled状态，在此调用发送邮箱验证码的接口
-      setCodeSent(true);
-      message.success('验证码已发送至邮箱！');
-      const getCode = {email,type:"forget"}
-      postEmailCode(getCode).then((res) => {
+      // message.success('验证码已发送至邮箱！');
+      const getCode = {email,type:"register"}
+      // console.log(getCode);
+       getEmailCode(getCode).then((res) => {
+                console.log("请求成功");
                 console.log(res);
+            }).catch((err) => {
+                console.log("请求错误");
+                console.log(err);
+                if (err.message.includes('|')) {
+                    message.success(`请求成功，请复制：${ err.message.split('|')[0]}`) ;
+                } else {
+                    message.error(err.message)
+                }
             })
 
+      setCodeSent(true);
 
-      
-    }).catch((errorInfo) => {
+    }).catch((error) => {
       // 有字段未通过验证，显示错误提示
-      message.error('请完整填写表单');
+      message.error('请填写邮箱');
     });
     
 
@@ -68,8 +94,23 @@ const Register = () => {
             name="email"
             rules={[{ required: true, message: '请输入邮箱号！' }]}
           >
-            <Input />
+              <Input value={email} onChange={(e) => setEmail(e.target.value)} />
           </Form.Item>
+
+            <Form.Item
+              label="验证码"
+              name="code"
+
+              rules={[{ required: true, message: '请输入验证码！' }]}
+            >
+              <div style={{ display: 'flex' }}>
+                <Input  />
+                <Button onClick={handleGetCode} >
+                  {codeSent ? '已发送验证码' : '获取验证码'}
+                </Button>
+              </div>
+            </Form.Item>
+
 
           <Form.Item
             label="密码"
@@ -110,19 +151,7 @@ const Register = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item
-            label="验证码"
-            name="code"
-            rules={[{ required: true, message: '请输入验证码！' }]}
-          >
-            <div style={{display: 'flex'}}>
-              <Input />
-            <Button onClick={handleGetCode} disabled={codeSent}>
-              {codeSent ? '已发送验证码' : '获取验证码'}
-            </Button>
-            </div>
-          </Form.Item>
-
+        
           <Form.Item wrapperCol={{ offset: 4, span: 18 }}>
             <Button type="primary" htmlType="submit" style={{width: '100%',height: '40px'}}>
              注册

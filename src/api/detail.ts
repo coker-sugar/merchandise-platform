@@ -26,6 +26,6 @@ export function getBatches(ids:string[]) {
 }
 
 export function getReview(id:string) {
-    return http.get<{ token: string }>(api.review+id);
+    return http.get(api.review+'1');
 }
 
