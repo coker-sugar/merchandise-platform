@@ -23,8 +23,6 @@ const Detail = (props: any) => {
     const [productDetail, setProductDetail] = useState({})
 
 
-    // console.log(productDetail);
-
     const [basic, setBasic] = useState({
         name: "爱奇艺会议1",
         typeId: "虚拟",
@@ -48,22 +46,7 @@ const Detail = (props: any) => {
             // console.log(res);
             setProductDetail(res)
         })
-        // getProduct('1')
-        //     .then((res) => {
-        //         console.log(res);
-        //         console.log("请求成功");
-        //         setProductDetail(JSON.parse(res.data))
-        //         // setBasic(res.data)
-        //     })
-        //     .catch((err) => {
-        //         console.log("请求失败");
-        //         console.log(err);
-        //     });
     }, []); // 空数组作为依赖，表示只在组件挂载和卸载时执行一次 根据id查找商品
-
-    // useEffect(() => {
-    //     console.log(productDetail);
-    // }, [productDetail]);    
 
     console.log(props);
     const roleId = props.roleId

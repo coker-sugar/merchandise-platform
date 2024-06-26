@@ -20,9 +20,9 @@ const Login = (props: any) => {
     // console.log('Success:', values);
     const { username, password } = values
     const loginData = { username, password }
-// <<<<<<< HEAD
-    // 发送请求
-    postLoginAPI(loginData).then(res => {
+
+    localStorage.setItem('user', JSON.stringify(loginData))
+    postLoginAPI(loginData as loginDataType).then(res => {
       console.log(res.data)
       props.setToken(res.data)
       localStorage.setItem('user', JSON.stringify(res.data))
@@ -31,13 +31,6 @@ const Login = (props: any) => {
     }).catch(err => {
       console.log(err)
     })
-
-// =======
-    // axios.post("https://f271b81c2194a437a9b3b3b78335bc95.pty.oscollege.net/auth/login", loginData, {
-    //   headers: {
-    //      'Content-Type': 'application/x-www-form-urlencoded'
-    //   }
-    // })
   };
 
   const onFinishFailed: FormProps<loginDataType>['onFinishFailed'] = (errorInfo) => {

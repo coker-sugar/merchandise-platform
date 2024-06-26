@@ -1,7 +1,8 @@
 export type loginDataType = {
-    username?: string;
-    password?: string;
-    auto?: string;
+    username: string;
+    password: string;
+    code: string;
+    email: string;
 };
 
 

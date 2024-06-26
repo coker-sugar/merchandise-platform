@@ -4,8 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 function Aside() {
   const location = useLocation();
   const categories = [
-    // { "id": 0, "name": "首页", "path": "/" },
-    // { "id": 0, "name": "样例", "path": "/exmple" },
     { "id": 0, "name": "新建商品页", "path": "/newProduct" },
     { "id": 1, "name": "数据大盘页", "path": "/dataBoard" },
   ]

@@ -29,17 +29,6 @@ const Remeber = () => {
             code,
             password
         }       
-        // postRemeberAPI(remeberData).then((res) => {
-        //     console.log("请求成功");
-        //     console.log(res);
-            
-        //     message.success("更改密码成功")
-        // }).catch((err) => {
-        //     console.log("请求错误");
-        //     console.log(err);
-            
-        //     message.error("更改密码失败")
-        // })
 
         axios.post('https://f271b81c2194a437a9b3b3b78335bc95.pty.oscollege.net/auth/forget', {
             email: remeberData.email,

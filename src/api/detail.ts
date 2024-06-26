@@ -1,5 +1,4 @@
 import http from '../util/request'
-// import {serverType,exmpleType} from '../types/server'
 
 const api = {
     exmple: '/m1/3169753-0-default/index',

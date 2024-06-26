@@ -1,5 +1,4 @@
 import http from '../util/request'
-import { Product } from "../types/product"
 const api = {
   create:'/product'
 };
