@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Flex, Form, Input, Button, Select, Cascader, CascaderProps, Typography } from 'antd';
+import { Flex, Form, Input, Button, Select, Cascader, CascaderProps, Typography, message } from 'antd';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 // 导入useNavigate
@@ -12,8 +12,6 @@ import { postCreate } from '../../api/edit.ts'
 
 import './index.less'
 import citySelect from './city.tsx';
-
-
 const { Option } = Select;
 
 const NewProductPage = () => {
@@ -22,17 +20,18 @@ const NewProductPage = () => {
   const [form] = Form.useForm();
   // const [draftSaved, setDraftSaved] = useState(false);
   const [methodid, setMethodid] = useState<string>('');
-  const [timeon, setTimeson] = useState("2000-01-01 00:11:00")
-  const [timeoff, setTimesoff] = useState("2000-01-05 12:12:12")
-
+  const [timeon, setTimeson] = useState("2000-01-01T00:11:00")
+  const [timeoff, setTimesoff] = useState("2000-01-05T12:12:12")
+  
   // 表单初始数据
-  const initialValues = {
-    name: "飞鹤奶粉45435",
+  const [initialValues, setInitValues] = useState(
+    {
+    name: "新商品",
     picture: "http...",
     description: "...",
     typeId: "1-1",
     categoryId: "1-1-1",
-    supplierName: "zs",
+    supplierName: "cvqw",
     supplierPhone: "12256398192",
     serviceGuarantee: "。。。",
 
@@ -40,13 +39,32 @@ const NewProductPage = () => {
     exchangeRestriction: 10,
 
     proxyUserInfoDtos: [
+      
+    ],
+
+    productMarketList:[
       {
-        userId: 123,
-        username: "xxx"
+        purchaseType: 0,
+        integralAmount: 100
+      },
+      {
+        purchaseType: 1,
+        integralAmount: 100,
+        cashPrice: 40
       }
-    ]
+    ],
+
+    cityBlackList: [['衡阳市'], ['岳阳市']],
+    cityWhiteList: [['长沙市'], ['湘潭市']],
+    // cityBlackList: [['衡阳市'], ['岳阳市']],
+    // cityWhiteList: [['长沙市'], ['湘潭市']],
+    timeOn: [dayjs('2000-01-01 00:11:00')],
+    timeOff: [dayjs('2000-01-05 12:12:12')]
+
   }
-  // 兑换价格
+)
+
+localStorage.setItem('detail',JSON.stringify(initialValues))
   const [productMarketList, setProductMarketList] = useState([
     {
       purchaseType: 0,
@@ -140,7 +158,9 @@ const NewProductPage = () => {
       ...prevState,
       timeOn: [dayjs(formattedDateString)]
     }))
-    const time = initProductElse.timeOff.map(date => date.format('YYYY-MM-DD HH:mm:ss').replace(' ', 'T')).toString().replace(/^\[|\]$/g, '')
+    const time = initProductElse.timeOff.map(date => date.format('YYYY-MM-DD HH:mm:ss')).toString().replace(/^\[|\]$/g, '').replace(' ', 'T')
+    console.log(time);
+    
     setTimeson(time)
   };
   const onChangeOff: DatePickerProps<Dayjs[]>['onChange'] = (date, dateString) => {
@@ -152,30 +172,43 @@ const NewProductPage = () => {
       timeOff: [dayjs(formattedDateString)]
     }))
 
-    const time = initProductElse.timeOff.map(date => date.format('YYYY-MM-DD HH:mm:ss').replace(' ', 'T')).toString().replace(/^\[|\]$/g, '')
+    const time = initProductElse.timeOff.map(date => date.format('YYYY-MM-DD HH:mm:ss')).toString().replace(/^\[|\]$/g, '').replace(' ', 'T')
     setTimesoff(time)
   };
 
-
-
-  // const handleSaveAsDraft = () => {
-  //   form.validateFields().then((values) => {
-  //     // 将数据保存到本地缓存或服务器
-  //     // 这里使用本地缓存示例
-  //     localStorage.setItem('draftProduct', JSON.stringify(values));
-  //     setDraftSaved(true);
-  //     message.success('已保存为草稿');
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   // 检查是否存在草稿，并恢复草稿数据
-  //   const draft = localStorage.getItem('draftProduct');
-  //   if (draft) {
-  //     form.setFieldsValue(JSON.parse(draft));
-  //     setDraftSaved(true);
-  //   }
-  // }, [form]);
+  const handleReset = () => {
+    setMethodid('2')
+    setProductMarketList([])
+    setInitProductElse({
+      cityBlackList: [],
+      cityWhiteList: [],
+      timeOn: [],
+      timeOff: []
+    })
+    setInitValues({
+      name: '',
+      picture: '',
+      description: '',
+      typeId: '',
+      categoryId: '',
+      supplierName: '',
+      supplierPhone: '',
+      serviceGuarantee: '',
+      stock: 0,
+      exchangeRestriction: 0,
+      proxyUserInfoDtos: [],
+      productMarketList:[],
+      cityBlackList:[],
+      cityWhiteList:[],
+      timeOn:[],
+      timeOff:[]
+    })
+  }
+  useEffect(() => {
+    if (methodid === '2') {
+      form.resetFields();
+    }
+  }, [methodid])
 
   const onFinish = (values: Product) => {
     // 提交表单数据到服务器
@@ -210,15 +243,15 @@ const NewProductPage = () => {
     };
     const { cityBlackList, cityWhiteList } = initProductElse
     const filteredDataElse = {
-      cityBlackList,
-      cityWhiteList
+      cityBlackList:cityBlackList.flat().join(','),
+      cityWhiteList:cityWhiteList.flat().join(',')
     };
     const productData = {
       ...filteredData,
       productMarketList,
       ...filteredDataElse,
-      timeoff,
-      timeon,
+      timeOff:timeoff,
+      timeOn:timeon,
       stock: 123, // 这个不知道是什么
       proxyUserInfoDtos: [] // 代理人暂时为空
     };
@@ -231,16 +264,28 @@ const NewProductPage = () => {
         postCreate('1', productData).then((res) => {
           console.log('res:', res);
           navigate('/detail')
+          
+          localStorage.setItem('ProductId',res.data)
+
+          
+          
         })
+        // message.success("创建商品成功")
+        localStorage.setItem('detail',JSON.stringify(initialValues))
         break;
       case '2':
         console.log('重置');
+        // setInitProductElse({})
+        setProductMarketList([])
+        // setInitValues({})
         break;
       case '3':
         console.log('存草稿');
         postCreate('0', productData).then((res) => {
           console.log('res:', res);
         })
+        message.success("保存草稿成功")
+        localStorage.setItem('detail',JSON.stringify(initialValues))
         break;
       default:
         break;
@@ -290,25 +335,25 @@ const NewProductPage = () => {
           name="typeId"
           rules={[{ required: true, message: '请选择' }]}
         >
-          <Select placeholder="请选择" className='select'>
-            <Option value="photo">手机</Option>
-            <Option value="cloth">衣服</Option>
-            <Option value="bag">包包</Option>
+          <Select placeholder="请选择" className='select' defaultValue={initialValues.typeId}>
+            <Option value="1">一级</Option>
+            <Option value="1-1">二级</Option>
+            <Option value="1-1-1">三级</Option>
           </Select>
         </Form.Item>
 
 
-        <Button onClick={()=>{navigate('/detail')}} style={{ marginTop: 30 }}>商品详情</Button>
+        <Button onClick={() => { navigate('/detail') }} style={{ marginTop: 30 }}>商品详情</Button>
         {/* </Form.Item> */}
         <Form.Item
           label="商品分类"
           name="categoryId"
           rules={[{ required: true, message: '请选择' }]}
         >
-          <Select placeholder="请选择" className='select'>
-            <Option value="photo">手机</Option>
-            <Option value="cloth">衣服</Option>
-            <Option value="bag">包包</Option>
+          <Select placeholder="请选择" className='select' defaultValue={initialValues.categoryId}>
+            <Option value="1">一级</Option>
+            <Option value="1-1">二级</Option>
+            <Option value="1-1-1">三级</Option>
           </Select>
         </Form.Item>
       </Flex>
@@ -351,7 +396,6 @@ const NewProductPage = () => {
               <Form.Item
                 label="价格类型"
                 name={`purchaseType-${index}`}
-
               >
                 <Select onChange={(value) => handlePriceChange(value, index)} placeholder="请选择" className='select' defaultValue={item.purchaseType.toString()} >
                   <Option value="0">纯积分</Option>
@@ -387,24 +431,27 @@ const NewProductPage = () => {
           )
         })
       }
-
       <Button type="dashed" onClick={handleAdd} style={{ width: 600, marginLeft: 30 }}>
         + 添加一行价格类型
       </Button>
 
-
-
       <h3>快递</h3>
-      <p>(不发货地区)</p>
+      {/* <p>()</p> */}
+      <Form.Item
+          label="不发货地区"
+          name="cityBlackList"
+          rules={[{ required: true, message: '请选择' }]}
+        >
       <Cascader
         options={citySelect.citySelect}
-        defaultValue={initProductElse.cityBlackList}
+        defaultValue={initialValues.cityBlackList}
         className='select select_city'
         placeholder="选择城市"
         onChange={handleBlackCityChange}
         showSearch
         multiple
       />
+     </Form.Item>
 
       <h3>兑换限制</h3>
       <Form.Item
@@ -413,43 +460,63 @@ const NewProductPage = () => {
         tooltip={{ title: '兑换限制', icon: <InfoCircleOutlined /> }}
         className='goods_name'
       >
-        <Input placeholder='请输入' />
+        <Input placeholder='请输入' defaultValue={initialValues.exchangeRestriction}/>
       </Form.Item>
 
 
       <Flex gap={commonGap.gap}>
+
+      <Form.Item 
+       label="上线时间"
+       name="timeOn"
+       className='goods_name'
+      >
         <Space direction="vertical">
-          <Typography.Title className='online_time'>上线时间</Typography.Title>
+          {/* <Typography.Title className='online_time'></Typography.Title> */}
           <DatePicker
             // style={{width:300}}
             showTime
             onChange={onChangeOn}
             maxTagCount="responsive"
-            defaultValue={initProductElse.timeOn}
+            defaultValue={initialValues.timeOn}
           />
         </Space>
+        </Form.Item>
+
+        <Form.Item 
+       label="下线时间"
+       name="timeOff"
+       className='goods_name'
+      >
         <Space direction="vertical">
-          <Typography.Title className='online_time'>下线时间</Typography.Title>
+          {/* <Typography.Title className='online_time'>下线时间</Typography.Title> */}
           <DatePicker
             showTime
             onChange={onChangeOff}
             maxTagCount="responsive"
-            defaultValue={initProductElse.timeOff}
+            defaultValue={initialValues.timeOff}
           />
         </Space>
 
+        </Form.Item>
 
-        <Flex vertical={true} gap={10} className='select_city'>
-          <div>投放城市</div>
+        <Form.Item 
+       label="投放城市"
+       name="cityWhiteList"
+       className='goods_name'
+      >
+        {/* <Flex vertical={true} gap={10} className='select_city'> */}
+          {/* <div></div> */}
           <Cascader
             options={citySelect.citySelect}
             placeholder="Please select cities"
-            defaultValue={initProductElse.cityWhiteList}
+            defaultValue={initialValues.cityWhiteList}
             onChange={handleWhiteCityChange}
             showSearch
             multiple
           />
-        </Flex>
+           </Form.Item>
+        {/* </Flex> */}
       </Flex>
 
       <Form.Item>
@@ -458,7 +525,7 @@ const NewProductPage = () => {
             提交
           </Button>
 
-          <Button type="primary" htmlType="submit" onClick={() => { setMethodid('2') }}>
+          <Button type="primary" onClick={handleReset}>
             重置
           </Button>
 

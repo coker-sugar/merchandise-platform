@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Flex, Button, Checkbox, Form, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { loginDataType } from '../../types/user'
+import axios from "axios"
 import { postLoginAPI } from '../../api/user'
 
 // import { setAuthData } from '../../redux/reducer/user'
@@ -19,24 +20,24 @@ const Login = (props: any) => {
     // console.log('Success:', values);
     const { username, password } = values
     const loginData = { username, password }
+// <<<<<<< HEAD
     // 发送请求
     postLoginAPI(loginData).then(res => {
       console.log(res.data)
-
-      // const Login = {
-      //   expire: "2024-06-1614:19:15.243",
-      //   Id: 1,
-      //   roleId: 1,
-      //   token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwiZXhwIjoxNzE5NzUyMjcwLCJpYXQiOjE3MTg4ODgyNzAsImp0aSI6ImFhZjAxNjgyLTdhYTgtNGQ0MS05NWZmLWI4MzhmZWI2ZjUwYyIsImF1dGhvcml0aWVzIjpbIlJPTEVfdXNlciJdfQ.UaReOsE28vKIT8FbHV2uESo_XB3uabH_bh0iYRxuKYQ",
-      //   username: "admin"
-      // }
       props.setToken(res.data)
       localStorage.setItem('user', JSON.stringify(res.data))
-      // navigate('/')
+      navigate('/')
 
     }).catch(err => {
       console.log(err)
     })
+
+// =======
+    // axios.post("https://f271b81c2194a437a9b3b3b78335bc95.pty.oscollege.net/auth/login", loginData, {
+    //   headers: {
+    //      'Content-Type': 'application/x-www-form-urlencoded'
+    //   }
+    // })
   };
 
   const onFinishFailed: FormProps<loginDataType>['onFinishFailed'] = (errorInfo) => {

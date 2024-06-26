@@ -1,5 +1,5 @@
 import './detail.less'
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // 导入ant组件
@@ -11,15 +11,21 @@ import BasicInformation from '../../components/detail/BasicInformation'
 import ProductPreview from '../../components/detail/ProductPreview'
 // 导入API
 import { getProduct, getReview, getApproved, getRejected, getBatches } from '../../api/detail'
+import { getProductDetailAPI } from '../../api/manage'
 // 导入类型
 import { exmpleType, serverType } from "../../types/server"
-import {Product} from '../../types/product'
+import { Product } from '../../types/product'
 
 const Detail = (props: any) => {
     const navigate = useNavigate();
     const [messages, setMessages] = useState("")
-    const [productDetail, setProductDetail] = useState({} as Product)
-    const [basic,setBasic] = useState({
+    const ProductId = localStorage.getItem('ProductId') || ''
+    const [productDetail, setProductDetail] = useState({})
+
+
+    // console.log(productDetail);
+
+    const [basic, setBasic] = useState({
         name: "爱奇艺会议1",
         typeId: "虚拟",
         serviceGuarantee: "服务保障",
@@ -37,19 +43,24 @@ const Detail = (props: any) => {
         Gphone: "1992379919"
     })
     useEffect(() => {
-        getProduct('1')
-            .then((res) => {
-                console.log(res);
-                console.log("请求成功");
-                setProductDetail(JSON.parse(res.data))
-                // setBasic(res.data)
-            })
-            .catch((err) => {
-                console.log("请求失败");
-                console.log(err);
-            });
+        getProductDetailAPI(ProductId).then((res) => {
+            console.log("拿到商品详情信息");
+            // console.log(res);
+            setProductDetail(res)
+        })
+        // getProduct('1')
+        //     .then((res) => {
+        //         console.log(res);
+        //         console.log("请求成功");
+        //         setProductDetail(JSON.parse(res.data))
+        //         // setBasic(res.data)
+        //     })
+        //     .catch((err) => {
+        //         console.log("请求失败");
+        //         console.log(err);
+        //     });
     }, []); // 空数组作为依赖，表示只在组件挂载和卸载时执行一次 根据id查找商品
-    
+
     // useEffect(() => {
     //     console.log(productDetail);
     // }, [productDetail]);    
@@ -79,7 +90,7 @@ const Detail = (props: any) => {
         }
     ];
 
-    
+
     const preview = {
         name: '六色高颜值冰川杯',
         picture: "https://seatmeat.oss-cn-shanghai.aliyuncs.com/Friend/Winter.jpg",
@@ -110,9 +121,6 @@ const Detail = (props: any) => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-    
-    
 
     // 编辑
     const handleEdit = () => {

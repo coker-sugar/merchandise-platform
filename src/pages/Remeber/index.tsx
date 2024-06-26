@@ -4,7 +4,9 @@ import { Flex, Form, Input, Button, message } from 'antd';
 import { MailOutlined, RobotOutlined, LockOutlined } from '@ant-design/icons';
 import { remeberDataType } from '../../types/user'
 import './index.less'
+import { useNavigate } from 'react-router-dom'
 import { postRemeberAPI,getEmailCode } from '../../api/user'
+
 import { AxiosResponse } from 'axios';
 import axios from 'axios'
 interface responseType  {
@@ -13,12 +15,13 @@ interface responseType  {
     message:string
 }
 const Remeber = () => {
+    const vavigate = useNavigate();
     const [email, setEmail] = useState('');
     const [codeSent, setCodeSent] = useState(false);
     const [form] = Form.useForm();
 
     const onFinish: FormProps<remeberDataType>['onFinish'] = (values) => {
-        console.log('Received values:', values);
+        // console.log('Received values:', values);
 
         const { email, code, password } = values;
         const remeberData = {
@@ -26,35 +29,34 @@ const Remeber = () => {
             code,
             password
         }       
-        postRemeberAPI(remeberData).then((res) => {
-            console.log("请求成功");
-            console.log(res);
-            
-            message.success("更改密码成功")
-        }).catch((err) => {
-            console.log("请求错误");
-            console.log(err);
-            
-            message.error("更改密码失败")
-        })
-
-        // axios.post('https://f271b81c2194a437a9b3b3b78335bc95.pty.oscollege.net/auth/forgot', {
-        //     email:remeberData.email,
-        //     code:remeberData.code,
-        //     password:remeberData.password
-        // },{
-        //     headers:{
-        //         'Content-Type':'application/json',
-        //     }
-        // }).then((res:AxiosResponse<responseType>) => {
+        // postRemeberAPI(remeberData).then((res) => {
         //     console.log("请求成功");
         //     console.log(res);
+            
         //     message.success("更改密码成功")
         // }).catch((err) => {
         //     console.log("请求错误");
         //     console.log(err);
-        //     message.error("更改密码失败")       
+            
+        //     message.error("更改密码失败")
         // })
+
+        axios.post('https://f271b81c2194a437a9b3b3b78335bc95.pty.oscollege.net/auth/forget', {
+            email: remeberData.email,
+            password: remeberData.password,
+            code: remeberData.code
+          },{
+            headers:{
+                'Content-Type':'application/json',
+            }
+        }).then((res:AxiosResponse<responseType>) => {
+            console.log(res);
+            message.success("更改密码成功")
+            vavigate('/login')
+        }).catch((err) => {
+            console.log(err);
+            message.error("更改密码失败")       
+        })
 
 
     };

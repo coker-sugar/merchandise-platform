@@ -7,14 +7,15 @@ const api = {
   userInfo: '/api/user/get_userinfo', // 用户信息
   remeber: "/auth/forgot",
   emailCode: '/auth/sendEmail',
-  exit:'/auth/logout'
+  exit: '/auth/logout'
 };
 
 export function postLoginAPI(data: loginDataType) {
-  return http.post(api.login,{
+
+  return http.post(api.login, {
     username: data.username,
     password: data.password
-  },{
+  }, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -34,14 +35,18 @@ export function postRemeberAPI(data: remeberDataType) {
     email: data.email,
     password: data.password,
     code: data.code
-  });
+  }, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  );
 }
-
 
 export function getEmailCode(data: emailType) {
   return http.get(api.emailCode, { params: data });
 }
 
-export function getExit(token:string) {
+export function getExit(token: string) {
   return http.get(api.exit, { params: token });
 }
