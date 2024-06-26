@@ -6,29 +6,6 @@ import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { exchangeAPI, saleTop20API, exchangeWayAPI } from '../../api/board'
 
-// const exchangeData = [
-//     { type: '2024-06-10', value: 80 },
-//     { type: '2024-06-12', value: 90 },
-//     { type: '2024-06-14', value: 100 },
-//     { type: '2024-06-16', value: 110 },
-//     { type: '2024-06-18', value: 120 },
-//     { type: '2024-06-20', value: 130 }
-//   ];
-
-//   const saleTop20Data = [
-//     { type: '美容洗护', value: 180 },
-//     { type: '生鲜水果', value: 190 },
-//     { type: '粮油副食', value: 200 },
-//     { type: '母婴用品', value: 310 },
-//     { type: '家电家具', value: 120 }   
-//   ];
-
-//   const exchangeWayData = [
-//     { type: '纯积分', value: 100 },
-//     { type: '积分加现金', value: 899 },
-//     { type: '纯现金', value: 100 }
-//   ];
-
 
 const DataBoard = () => {
     
@@ -61,9 +38,6 @@ const DataBoard = () => {
 
     const Calendar: React.FC = () => {
         const disabledDate = (current: dayjs.Dayjs): boolean => {
-            // if (!current) {
-            //     return false;
-            // }
             return current.isAfter(dayjs()) || current.isBefore(dayjs().subtract(60, 'days'));
         };
 

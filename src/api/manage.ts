@@ -11,15 +11,12 @@ const api = {
 export function searchAPI(data: FilterType) {
   return http.post(
     `${api.pageSearch}?pageNo=${data.pageNo}&pageSize=${data.pageSize}`,
-    
     {
       headers: {
         "Content-Type": "application/json",
       },
     }
   );
-
-    // `${api.pageSearch}?pageNo=1&pageSize=10`,data);
 }
 
 //批量下线
@@ -29,5 +26,5 @@ export function batchesOfflineAPI(ids: string[]) {
 
 // 根据id查询商品信息
 export function getProductDetailAPI(id:string) {
-    return http.get(`${api.getProductDetail}/${id}`);
+  return http.get(`${api.getProductDetail}/${id}`);
 }

@@ -71,7 +71,7 @@ const BasicInformation: React.FC<BasicInformationProps> = (basic) => {
                 <div></div>
             </Flex>
 
-            <Table className='table' columns={columns} dataSource={data} />
+            {/* <Table className='table' columns={columns} dataSource={data} /> */}
         </Flex>
     )
 }

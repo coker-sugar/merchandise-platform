@@ -17,10 +17,12 @@ import './index.less'
 const Login = (props: any) => {
   const navigate = useNavigate()
   const onFinish: FormProps<loginDataType>['onFinish'] = (values) => {
-    console.log('Success:', values);
+    // console.log('Success:', values);
     const { username, password } = values
     const loginData = { username, password }
-    postLoginAPI(loginData).then(res => {
+
+    localStorage.setItem('user', JSON.stringify(loginData))
+    postLoginAPI(loginData as loginDataType).then(res => {
       console.log(res.data)
       props.setToken(res.data)
       localStorage.setItem('user', JSON.stringify(res.data))
@@ -29,26 +31,6 @@ const Login = (props: any) => {
     }).catch(err => {
       console.log(err)
     })
-
-    //  发送请求
-    // postLoginAPI(loginData).then(res => {
-    //   console.log(res)  
-
-    // const Logindata = {
-    //   expire: "2024-06-1614:19:15.243",
-    //   Id: 1,
-    //   roleId: 1,
-    //   token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYWRtaW4iLCJpZCI6MSwiZXhwIjoxNzE5NzUyMjcwLCJpYXQiOjE3MTg4ODgyNzAsImp0aSI6ImFhZjAxNjgyLTdhYTgtNGQ0MS05NWZmLWI4MzhmZWI2ZjUwYyIsImF1dGhvcml0aWVzIjpbIlJPTEVfdXNlciJdfQ.UaReOsE28vKIT8FbHV2uESo_XB3uabH_bh0iYRxuKYQ",
-    //   username: "admin"
-    // }
-    // props.setToken(Logindata)
-    // localStorage.setItem('user', JSON.stringify(Logindata))
-    // 这里该如何跳转至首页
-    // navigate('/')
-      // }).catch(err => {
-      //   console.log(err)
-      // })
-      
   };
 
   const onFinishFailed: FormProps<loginDataType>['onFinishFailed'] = (errorInfo) => {

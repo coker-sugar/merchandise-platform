@@ -30,13 +30,13 @@ const ProductList: React.FC<ProductTableProps> = ({ currentPage, pageSize, onCha
   // 批量操作选中的商品id
   const [selectedIDs, setSelectedIDs] = useState<number[]>([]); 
 
+  // 角色名
   const [currentUser, setCurrentUser] = useState('admin');
-  // useEffect(() => {
-  //   // 在组件挂载时从本地存储中获取角色名
-  //   const role =  JSON.parse(localStorage.getItem('userdata')).username 
-  //   setCurrentUser(role)
-  // }, []);
-
+  useEffect(() => {
+    // 在组件挂载时从本地存储中获取角色名
+    const role =  JSON.parse(localStorage.getItem('user')).username 
+    setCurrentUser(role)
+  }, []);
 
   // tab栏筛选列表
   const filteredTabProducts = products.filter((product) => {
@@ -107,7 +107,7 @@ const ProductList: React.FC<ProductTableProps> = ({ currentPage, pageSize, onCha
 
   }
   // 商品下线API
-  const handleTogglestate = (productIDs: string[] | string = []) => {
+  const handleTogglestate = (productIDs: string[] ) => {
     if (!Array.isArray(productIDs)) {
       productIDs = [productIDs];
     }
@@ -115,7 +115,7 @@ const ProductList: React.FC<ProductTableProps> = ({ currentPage, pageSize, onCha
     batchesOfflineAPI(productIDs).then((response) => {
       // 处理返回的数据
       console.log(response);
-      location.reload();  // 强制刷新页面
+      location.reload();  
       // const updatedProducts = 
     }).catch((error) => {
       // 处理错误

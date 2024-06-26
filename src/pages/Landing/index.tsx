@@ -8,6 +8,7 @@ import LandingCard from '../../components/LandingCard';
 function Landing() {  
   //记录哪个导航栏处于active状态
   const [key,setKey] = useState(['home'])
+  localStorage.removeItem('user')
   //卡片渲染数据
   const cardData=[
     {
@@ -77,11 +78,6 @@ function Landing() {
             <a href="https://www.antgroup.com/">加入我们</a>
           </div>
         </div>
-        
-      
-        
-          
-      
         
       </div>
      

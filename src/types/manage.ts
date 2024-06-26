@@ -20,14 +20,3 @@ export interface RowType {
   timeOff: string;
   timeOn: string;
 }
-
-// 商品信息
-// export interface ProductType { 
-//     id: string;
-//     name: string;
-//     stock:number;
-//     startTime: string;
-//     endTime: string;
-//     status:number;
-//     manager: string;
-// }
